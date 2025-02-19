@@ -1,0 +1,58 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.container {
+  padding: $spacing-lg;
+
+  .welcome {
+    margin-bottom: 24px;
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    p {
+      color: $text-secondary;
+    }
+  }
+
+  .statsRow {
+    margin-bottom: 24px;
+  }
+
+  .card {
+    @include transition;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  .chart {
+    height: 400px;
+    margin-top: 24px;
+  }
+
+  .statCard {
+    @include card;
+    text-align: center;
+
+    .statValue {
+      font-size: 24px;
+      font-weight: 600;
+      color: $primary-color;
+      margin: $spacing-sm 0;
+    }
+
+    .statLabel {
+      color: $text-secondary;
+    }
+  }
+
+  .chartSection {
+    margin-top: $spacing-lg;
+  }
+} 

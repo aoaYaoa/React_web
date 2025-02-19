@@ -1,0 +1,44 @@
+.container {
+  padding: 24px;
+  background: var(--bg-base);
+  border-radius: 8px;
+
+  .header {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .search {
+      background: var(--bg-elevated);
+      padding: 24px;
+      border-radius: 8px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.drawerContent {
+  :global {
+    .ant-descriptions {
+      background: var(--bg-base);
+      
+      .ant-descriptions-item-label {
+        width: 100px;
+        background: var(--bg-elevated);
+      }
+      
+      .ant-descriptions-item-content {
+        background: var(--bg-base);
+      }
+    }
+
+    .ant-form-item-label {
+      font-weight: 500;
+    }
+  }
+} 

@@ -1,0 +1,104 @@
+// 变量定义
+$primary-color: #1890ff;
+$text-color: #1a1a1a;
+$card-bg: rgba(255, 255, 255, 0.95);
+$overlay-bg: rgba(0, 0, 0, 0.5);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glass-effect {
+  background: $card-bg;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+// 主容器
+.container {
+  width: 100vw;
+  height: 100vh;
+  @include flex-center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $overlay-bg;
+    backdrop-filter: blur(8px);
+  }
+}
+
+// 登录卡片
+.loginCard {
+  position: relative;
+  width: 400px;
+  padding: 40px;
+  border-radius: 16px;
+  @include glass-effect;
+
+  h1 {
+    margin-bottom: 32px;
+    text-align: center;
+    color: $text-color;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  // 响应式设计
+  @media (max-width: 480px) {
+    width: 90%;
+    padding: 24px;
+    margin: 0 16px;
+  }
+}
+
+// 表单样式
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  :global {
+    .ant-input-affix-wrapper {
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .ant-input {
+      height: 40px;
+      border-radius: 8px;
+      
+      &:focus {
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+// 按钮样式
+.loginButton {
+  width: 100%;
+  height: 40px;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  
+  &:hover {
+    background: darken($primary-color, 5%);
+  }
+} 

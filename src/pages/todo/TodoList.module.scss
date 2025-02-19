@@ -1,0 +1,25 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $spacing-lg;
+
+  .todoCard {
+    @include card;
+  }
+
+  .todoForm {
+    margin-bottom: $spacing-lg;
+  }
+
+  .todoList {
+    margin-top: $spacing-md;
+  }
+
+  .statsSection {
+    margin-bottom: $spacing-lg;
+  }
+} 

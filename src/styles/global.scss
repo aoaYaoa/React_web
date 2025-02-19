@@ -1,0 +1,125 @@
+@import './theme';
+@import './variables';
+@import './mixins';
+
+// 重置样式
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include scrollbar;
+  background: $bg-light;
+  color: $text-color;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+// 通用样式
+.page-container {
+  padding: $spacing-lg;
+  
+  @include responsive(sm) {
+    padding: $spacing-md;
+  }
+}
+
+.card {
+  @include card;
+}
+
+// Ant Design 全局样式覆盖
+:global {
+  .ant-btn {
+    border-radius: $border-radius-base;
+    height: 36px;
+    padding: 0 $spacing-md;
+    font-size: 14px;
+    
+    &.ant-btn-lg {
+      height: 40px;
+      padding: 0 $spacing-lg;
+    }
+    
+    &.ant-btn-sm {
+      height: 28px;
+      padding: 0 $spacing-sm;
+    }
+  }
+
+  .ant-input {
+    border-radius: $border-radius-base;
+    padding: $spacing-xs $spacing-sm;
+    
+    &:hover, &:focus {
+      border-color: $primary-color;
+    }
+  }
+
+  .ant-table {
+    background: $bg-base;
+    border-radius: $border-radius-base;
+    
+    .ant-table-thead > tr > th {
+      background: $bg-light;
+      font-weight: 600;
+    }
+    
+    .ant-table-tbody > tr:hover > td {
+      background: rgba($primary-color, 0.02);
+    }
+  }
+
+  .ant-card {
+    border-radius: $border-radius-md;
+  }
+}
+
+// 页面卡片样式
+.page-card {
+  @include card;
+  margin-bottom: $spacing-lg;
+  
+  .ant-card-head {
+    padding: 0 0 $spacing-md;
+    border-bottom: 1px solid $border-color;
+    
+    .ant-card-head-title {
+      padding: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+  
+  .ant-card-body {
+    padding: $spacing-lg 0 0;
+  }
+}
+
+// 表单样式优化
+.ant-form {
+  .ant-form-item {
+    margin-bottom: $spacing-lg;
+  }
+  
+  .ant-form-item-label > label {
+    font-weight: 500;
+  }
+}
+
+// 下拉菜单样式优化
+.ant-dropdown-menu {
+  padding: $spacing-xs 0;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-md;
+  
+  .ant-dropdown-menu-item {
+    padding: $spacing-xs $spacing-md;
+    
+    &:hover {
+      background: rgba($primary-color, 0.02);
+    }
+  }
+} 

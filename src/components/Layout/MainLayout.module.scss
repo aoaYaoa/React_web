@@ -1,0 +1,176 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+// 侧边栏宽度变量
+$sider-width: 200px;
+$header-height: 64px;
+$footer-height: 60px;
+
+.layout {
+  min-height: 100vh;
+}
+
+.sider {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 101;
+  transition: all $transition-normal;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+
+  .logo {
+    height: $header-height;
+    padding: 0 24px;
+    overflow: hidden;
+    @include flex-center;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all $transition-normal;
+    background: rgba(255, 255, 255, 0.1);
+
+    img {
+      height: 32px;
+      margin-right: 8px;
+    }
+  }
+
+  :global {
+    .ant-menu {
+      height: auto;
+      border-right: none;
+      overflow-y: auto;
+      @include scrollbar;
+
+      .ant-menu-item, 
+      .ant-menu-submenu-title {
+        height: 50px;
+        line-height: 50px;
+        margin: 0;
+        padding: 0 24px !important;
+        transition: all $transition-fast;
+
+        &:hover {
+          background: rgba($primary-color, 0.1);
+        }
+      }
+
+      .ant-menu-submenu {
+        &-inline {
+          .ant-menu-sub {
+            background: transparent;
+            height: auto;
+          }
+        }
+
+        .ant-menu-item {
+          padding-left: 48px !important;
+        }
+      }
+
+      .ant-menu-item-selected {
+        background: $primary-color;
+      }
+    }
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: $sider-width;
+  right: 0;
+  height: $header-height;
+  z-index: 100;
+  background: white;
+  padding: 0 24px;
+  box-shadow: $shadow-sm;
+  @include flex-between;
+
+  .rightSection {
+    @include flex-center;
+    gap: 16px;
+  }
+}
+
+.content {
+  margin: $header-height 0 $footer-height $sider-width;
+  padding: $spacing-lg;
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+  transition: all $transition-normal;
+  background: $bg-light;
+  overflow-y: auto;
+
+  &.collapsed {
+    margin-left: 80px;
+  }
+
+  .breadcrumb {
+    margin-bottom: $spacing-md;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: $sider-width;
+  right: 0;
+  height: $footer-height;
+  z-index: 99;
+  background: var(--bg-base);
+  border-top: 1px solid var(--border-color);
+  transition: all $transition-normal;
+
+  &.collapsed {
+    left: 80px;
+  }
+}
+
+// 移动端适配
+@include responsive(lg) {
+  $sider-width: 80px;
+
+  .sider {
+    .logo {
+      padding: 0 16px;
+      font-size: 16px;
+    }
+  }
+
+  .content {
+    padding: $spacing-md;
+  }
+
+  .footer {
+    left: $sider-width;
+  }
+}
+
+@include responsive(md) {
+  .sider {
+    .logo {
+      padding: 0 8px;
+      justify-content: center;
+
+      span {
+        display: none;
+      }
+    }
+  }
+}
+
+@include responsive(sm) {
+  .content {
+    padding: $spacing-md;
+  }
+}
+
+// 添加滚动容器
+.menuContainer {
+  height: calc(100vh - #{$header-height});
+  overflow-y: auto;
+  @include scrollbar;
+} 

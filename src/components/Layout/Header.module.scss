@@ -1,0 +1,124 @@
+.header {
+  @include flex-between;
+  padding: 0 24px;
+  height: $header-height;
+  position: fixed;
+  right: 0;
+  width: calc(100% - #{$sider-width});
+  transition: all $transition-normal;
+  background: var(--bg-base);
+  box-shadow: $shadow-sm;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+
+  &.collapsed {
+    width: calc(100% - 80px); // 侧边栏收起时的宽度
+  }
+
+  .left {
+    @include flex-center;
+    gap: 16px;
+
+    .trigger {
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: $border-radius-sm;
+      color: var(--text-secondary);
+      transition: all $transition-fast;
+
+      &:hover {
+        color: $primary-color;
+        background: var(--bg-light);
+      }
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-color);
+      margin: 0;
+    }
+  }
+
+  .right {
+    @include flex-center;
+
+    .icon {
+      font-size: 16px;
+      color: var(--text-secondary);
+      transition: all $transition-fast;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    .divider {
+      height: 24px;
+      width: 1px;
+      background: var(--border-color);
+      margin: 0 8px;
+    }
+
+    :global {
+      .ant-btn {
+        padding: 4px 8px;
+        height: 32px;
+        
+        &:hover {
+          background: var(--bg-light);
+        }
+      }
+
+      .ant-select {
+        .ant-select-selector {
+          padding: 0;
+          border: none;
+          background: transparent;
+        }
+      }
+
+      .ant-badge {
+        .ant-badge-count {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+@include responsive(md) {
+  .header {
+    padding: 0 16px;
+
+    .left {
+      .title {
+        display: none;
+      }
+    }
+
+    .right {
+      .divider {
+        display: none;
+      }
+    }
+  }
+}
+
+// 添加通知相关样式
+.notificationHeader {
+  @include flex-between;
+  padding: 0 0 $spacing-sm;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: $spacing-sm;
+}
+
+.readMessage {
+  opacity: 0.6;
+}
+
+.messageTime {
+  font-size: 12px;
+  margin-top: 4px;
+} 

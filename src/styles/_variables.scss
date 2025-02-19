@@ -1,0 +1,55 @@
+// 使用 CSS 变量
+$primary-color: var(--primary-color);
+$bg-base: var(--bg-base);
+$bg-light: var(--bg-light);
+$bg-dark: var(--bg-dark);
+$text-color: var(--text-color);
+$text-secondary: var(--text-secondary);
+$border-color: var(--border-color);
+
+// 其他固定颜色
+$success-color: #52c41a;
+$warning-color: #faad14;
+$error-color: #f5222d;
+$bg-overlay: rgba(0, 0, 0, 0.5);
+$bg-mask: rgba(0, 0, 0, 0.45);
+$bg-card: rgba(255, 255, 255, 0.95);
+
+// 间距
+$spacing-unit: 8px;
+$spacing-xs: $spacing-unit;
+$spacing-sm: $spacing-unit * 2;
+$spacing-md: $spacing-unit * 3;
+$spacing-lg: $spacing-unit * 4;
+$spacing-xl: $spacing-unit * 5;
+
+// 圆角
+$border-radius-base: 6px;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 16px;
+
+// 阴影
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+$shadow-card: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+
+// 断点
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// 增加过渡动画
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+$transition-slow: 0.4s;
+$ease-base: cubic-bezier(0.645, 0.045, 0.355, 1);
+$ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+// 布局尺寸
+$sider-width: 200px;
+$header-height: 64px;
+$footer-height: 60px; 

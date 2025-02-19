@@ -1,0 +1,25 @@
+.themeCard {
+  max-width: 800px;
+  margin: 0 auto;
+  
+  :global {
+    .ant-form-item {
+      margin-bottom: 24px;
+    }
+    
+    .ant-divider {
+      margin: 32px 0 24px;
+      
+      &-inner-text {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.colorPreview {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+} 

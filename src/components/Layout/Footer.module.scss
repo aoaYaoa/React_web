@@ -1,0 +1,96 @@
+.footer {
+  padding: 0 24px;
+  height: $footer-height;
+  background: var(--bg-base);
+  border-top: 1px solid var(--border-color);
+  transition: all $transition-normal;
+
+  .container {
+    height: 100%;
+    @include flex-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .left {
+    @include flex-center;
+    gap: 32px;
+
+    .copyright {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .links {
+      @include flex-center;
+      gap: 24px;
+
+      a {
+        color: var(--text-secondary);
+        font-size: 14px;
+        transition: all $transition-fast;
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background: $primary-color;
+          transition: width $transition-fast;
+        }
+
+        &:hover {
+          color: $primary-color;
+
+          &:after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .right {
+    @include flex-center;
+    gap: 16px;
+
+    a {
+      color: var(--text-secondary);
+      font-size: 20px;
+      padding: 8px;
+      border-radius: $border-radius-sm;
+      transition: all $transition-fast;
+      line-height: 1;
+
+      &:hover {
+        color: $primary-color;
+        background: var(--bg-light);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+@include responsive(md) {
+  .footer {
+    .container {
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .left {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+
+      .links {
+        gap: 16px;
+      }
+    }
+  }
+} 

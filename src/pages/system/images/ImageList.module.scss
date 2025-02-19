@@ -1,0 +1,60 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.container {
+  @include flex-column;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  
+  @include responsive(sm) {
+    padding: $spacing-md;
+  }
+}
+
+.imageCard {
+  @include transition;
+  height: 100%;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+  
+  :global {
+    .ant-card-cover {
+      overflow: hidden;
+      
+      img {
+        @include transition;
+        height: 200px;
+        object-fit: cover;
+        
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+    
+    .ant-card-meta-title {
+      @include text-truncate;
+    }
+  }
+}
+
+.loading {
+  @include flex-center;
+  padding: $spacing-lg;
+}
+
+.endMessage {
+  text-align: center;
+  padding: $spacing-md;
+  color: $text-secondary;
+}
+
+.imagePlaceholder {
+  @include flex-center;
+  height: 200px;
+  background: $bg-light;
+} 
