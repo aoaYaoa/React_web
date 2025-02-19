@@ -30,13 +30,13 @@ export function Footer({ className }: FooterProps) {
 
         <div className={styles.right}>
           <Space size={16}>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/aoaYaoa/React_web" target="_blank" rel="noopener noreferrer">
               <GithubOutlined />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+            <a href="" target="_blank" rel="noopener noreferrer">
               <TwitterOutlined />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+            <a href="" target="_blank" rel="noopener noreferrer">
               <LinkedinOutlined />
             </a>
           </Space>

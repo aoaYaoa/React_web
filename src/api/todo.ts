@@ -2,6 +2,7 @@ import request from '../utils/request'
 import { TodoItem } from '../mock/todoData'
 import Mock from 'mockjs'
 import { ApiResponse, ResponseCode } from '../types/response'
+import { pexelsKey, pexelsBaseUrl } from '@/config/apiKey'
 
 /**
  * 配置 Mock 请求延迟
@@ -89,5 +90,27 @@ export const todoApi = {
    */
   delete(id: number) {
     return request.delete<any, void>(`/todos/${id}`)
+  }
+}
+
+export async function getImages(query: string, page: number = 1) {
+  try {
+    const response = await fetch(
+      `${pexelsBaseUrl}/search?query=${query}&page=${page}&per_page=10`,
+      {
+        headers: {
+          Authorization: pexelsKey
+        }
+      }
+    );
+    const data = await response.json();
+    // 确保每个图片有唯一的 key
+    return data.photos.map((photo: any) => ({
+      ...photo,
+      key: `${photo.id}-${Date.now()}` // 添加时间戳确保唯一性
+    }));
+  } catch (error) {
+    console.error('Failed to fetch images:', error);
+    return [];
   }
 } 
