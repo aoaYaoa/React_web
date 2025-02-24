@@ -1,114 +1,88 @@
-import React, { useMemo } from 'react';
-import { Table, Form, Row, Col, Button, Space, Card, Skeleton } from 'antd';
+import React, { useEffect } from 'react';
+import { Table, Form, Row, Col, Button, Space } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import type { SearchTableProps } from './types';
-import styles from './index.module.scss';
 
 export function SearchTable<T extends Record<string, any>>({
   columns,
-  dataSource,
+  dataSource = [],
   searchFields = [],
-  formProps,
-  showSearch = true,
-  showToolbar = true,
-  toolbarActions = [],
   onSearch,
   onReset,
-  virtualScroll,
-  rowHeight = 54,
-  loading,
-  ...tableProps
+  rowKey = 'id',
+  variant = 'bordered',
+  ...props
 }: SearchTableProps<T>) {
   const [form] = Form.useForm();
 
-  const renderSearch = () => {
-    if (!showSearch || searchFields.length === 0) return null;
+  useEffect(() => {
+    console.log('SearchTable dataSource:', dataSource);
+  }, [dataSource]);
+
+  const renderSearchForm = () => {
+    if (!searchFields?.length) return null;
 
     return (
-      <Card className={styles.search} bordered={false}>
-        <Form 
-          form={form} 
-          onFinish={onSearch}
-          layout="horizontal"
-          {...formProps}
-        >
-          <Row gutter={24}>
-            {searchFields.map(field => (
-              <Col key={field.name} span={field.span || 6}>
-                <Form.Item 
-                  name={field.name} 
-                  label={field.label}
-                  rules={field.rules}
-                >
-                  {field.component}
-                </Form.Item>
-              </Col>
-            ))}
-            <Col span={6}>
-              <Form.Item label=" " colon={false}>
-                <Space>
-                  <Button 
-                    type="primary" 
-                    htmlType="submit" 
-                    icon={<SearchOutlined />}
-                  >
-                    搜索
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      form.resetFields();
-                      onReset?.();
-                    }}
-                    icon={<ReloadOutlined />}
-                  >
-                    重置
-                  </Button>
-                </Space>
+      <Form form={form} onFinish={(values) => onSearch?.(values)}>
+        <Row gutter={24} style={{ marginBottom: 24 }}>
+          {searchFields.map(field => (
+            <Col key={field.name} span={6}>
+              <Form.Item
+                label={field.label}
+                name={field.name}
+                rules={field.rules}
+              >
+                {field.component}
               </Form.Item>
             </Col>
-          </Row>
-        </Form>
-      </Card>
-    );
-  };
-
-  const renderToolbar = () => {
-    if (!showToolbar) return null;
-
-    return (
-      <div className={styles.toolbar} style={{ justifyContent: 'right' }}>
-        <Space>
-          {toolbarActions}
-        </Space>
-      </div>
+          ))}
+          <Col span={6}>
+            <Form.Item>
+              <Space>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  icon={<SearchOutlined />}
+                >
+                  搜索
+                </Button>
+                <Button
+                  icon={<ReloadOutlined />}
+                  onClick={() => {
+                    form.resetFields();
+                    onReset?.();
+                  }}
+                >
+                  重置
+                </Button>
+              </Space>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
     );
   };
 
   return (
-    <div className={styles.container}>
-      {loading ? (
-        <Skeleton active paragraph={{ rows: 10 }} />
-      ) : (
-        <>
-          {renderSearch()}
-          {renderToolbar()}
-          <Card bordered={false}>
-            <Table 
-              columns={columns}
-              dataSource={dataSource}
-              rowKey="id"
-              scroll={{ x: 'max-content' }}
-              pagination={{
-                showQuickJumper: true,
-                showSizeChanger: true,
-                showTotal: (total) => `共 ${total} 条`,
-                ...tableProps.pagination
-              }}
-              {...tableProps}
-            />
-          </Card>
-        </>
-      )}
+    <div style={{ background: '#fff', padding: 24 }}>
+      {renderSearchForm()}
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        rowKey="id"
+        bordered
+        pagination={{
+          showQuickJumper: true,
+          showSizeChanger: true,
+          showTotal: (total) => `共 ${total} 条`,
+          ...props.pagination
+        }}
+        loading={!dataSource || dataSource.length === 0}
+        locale={{
+          emptyText: '暂无数据'
+        }}
+        {...props}
+      />
     </div>
   );
 } 

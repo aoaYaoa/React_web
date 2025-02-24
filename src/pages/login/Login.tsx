@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { getRandomPhoto } from '@/services/pexels';
 import { Button, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useUserStore } from '@/store/userStore';
+import { useAppDispatch } from '@/reduxTookit/store';
+import { login } from '@/reduxTookit/slices/userSlice';
 import styles from './Login.module.scss';
 
 export function Login() {
   const [bgImage, setBgImage] = useState('');
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const login = useUserStore(state => state.login);
 
   useEffect(() => {
     async function fetchBackgroundImage() {
@@ -23,9 +24,9 @@ export function Login() {
     fetchBackgroundImage();
   }, []);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: { username: string; password: string }) => {
     try {
-      await login(values);
+      await dispatch(login(values));
       navigate('/home', { replace: true });
     } catch (error) {
       message.error('登录失败：' + (error as Error).message);

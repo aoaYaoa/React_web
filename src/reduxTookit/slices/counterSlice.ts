@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CounterState {
+// 导出 CounterState 类型
+export interface CounterState {
   value: number;
   title: string;
 }
 
 const initialState: CounterState = {
   value: 0,
-  title: 'Redux Counter'
+  title: '计数器'
 };
 
 export const counterSlice = createSlice({

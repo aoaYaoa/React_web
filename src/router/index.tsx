@@ -33,6 +33,9 @@ import InfiniteList from '@/pages/virtual-list/InfiniteList'
 import { lazy, Suspense } from 'react'
 import { Loading } from '@/components/Loading'
 import UserList from '@/pages/system/users/UserList'
+import StateManagementDemo from '@/pages/hooks/StateManagementDemo'
+import ProductPage from '@/pages/product/product'
+import CartPage from '@/pages/cart/CartPage'
 
 // 懒加载路由组件
 const CrudPage = lazy(() => import('@/pages/Crud'))
@@ -121,43 +124,49 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'state',
-            element: <StateDemo />,
-            handle: { title: 'useState' }
+            element: <StateDemo />
           },
           {
             path: 'effect',
-            element: <EffectDemo />,
-            handle: { title: 'useEffect' }
+            element: <EffectDemo />
           },
           {
             path: 'context',
-            element: <ContextDemo />,
-            handle: { title: 'useContext' }
-          },
-          {
-            path: 'ref',
-            element: <RefDemo />,
-            handle: { title: 'useRef' }
-          },
-          {
-            path: 'memo',
-            element: <MemoDemo />,
-            handle: { title: 'useMemo' }
-          },
-          {
-            path: 'callback',
-            element: <CallbackDemo />,
-            handle: { title: 'useCallback' }
+            element: <ContextDemo />
           },
           {
             path: 'reducer',
-            element: <ReducerDemo />,
-            handle: { title: 'useReducer' }
+            element: <ReducerDemo />
+          },
+          {
+            path: 'memo',
+            element: <MemoDemo />
+          },
+          {
+            path: 'callback',
+            element: <CallbackDemo />
+          },
+          {
+            path: 'ref',
+            element: <RefDemo />
           },
           {
             path: 'custom',
-            element: <CustomHooksDemo />,
-            handle: { title: '自定义Hooks' }
+            element: <CustomHooksDemo />
+          },
+          {
+            path: 'state-management',
+            element: <StateManagementLayout />,
+            children: [
+              {
+                path: 'redux',
+                element: <ReduxDemo />
+              },
+              {
+                path: 'zustand',
+                element: <ZustandDemo />
+              }
+            ]
           }
         ]
       },
@@ -219,6 +228,23 @@ export const router = createBrowserRouter([
         ]
       },
       {
+        path: 'product',
+        children: [
+          {
+            path: 'list',
+            element: <ProductPage />
+          }
+        ]
+      },
+      {
+        path: 'cart',
+        element: <CartPage />,
+        handle: {
+          title: '购物车',
+          requiresAuth: true
+        }
+      },
+      {
         path: '*',
         element: <NotFound />
       }
@@ -253,7 +279,8 @@ export const menuConfig = [
       { key: '/hooks/memo', label: 'useMemo' },
       { key: '/hooks/callback', label: 'useCallback' },
       { key: '/hooks/reducer', label: 'useReducer' },
-      { key: '/hooks/custom', label: '自定义Hooks' }
+      { key: '/hooks/custom', label: '自定义Hooks' },
+      { key: '/hooks/state-management', label: '状态管理' }
     ]
   },
   {

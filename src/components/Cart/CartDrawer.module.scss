@@ -1,0 +1,35 @@
+.cartDrawer {
+  :global {
+    .ant-drawer-body {
+      padding-bottom: 80px;
+    }
+  }
+}
+
+.cartFooter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  text-align: center;
+}
+
+.cartItem {
+  .itemInfo {
+    flex: 1;
+  }
+
+  .itemQuantity {
+    width: 100px;
+    text-align: right;
+  }
+
+  .itemTotal {
+    margin-top: 8px;
+    text-align: right;
+    color: #999;
+  }
+} 

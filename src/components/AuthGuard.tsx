@@ -1,13 +1,14 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useUserStore } from '@/store/userStore';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/reduxTookit/store';
 
 interface AuthGuardProps {
   children: React.ReactNode;
 }
 
 export function AuthGuard({ children }: AuthGuardProps) {
-  const username = useUserStore(state => state.username);
+  const username = useSelector((state: RootState) => state.user.userInfo?.username);
   const location = useLocation();
 
   if (!username) {

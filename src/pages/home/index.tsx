@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Typography, Row, Col, Statistic } from 'antd';
-import { useAppSelector } from '@/stores/store';
-import { selectUser } from '@/stores/slices/userSlice';
+import { useAppSelector } from '@/reduxTookit/store';
+import { selectUser } from '@/reduxTookit/slices/userSlice';
 import { BaseChart } from '@/components/Charts/BaseChart';
 import type { EChartsOption } from 'echarts';
 import styles from './HomePage.module.scss';

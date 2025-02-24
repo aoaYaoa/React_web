@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Typography, Space, Tabs, message } from 'antd'
 import { ResumableUpload } from '../../../components/Upload/ResumableUpload'
 import { DragUpload } from '../../../components/Upload/DragUpload'
@@ -9,7 +9,6 @@ import {
   FileOutlined,
   InboxOutlined 
 } from '@ant-design/icons'
-import { useUploadStore } from '../../../stores/uploadStore'
 
 const { Title, Text } = Typography
 const { TabPane } = Tabs
@@ -22,9 +21,13 @@ interface UploadedFile {
 }
 
 export function FileUploadPage() {
-  const { files, progress, status, error } = useUploadStore()
+  const [files, setFiles] = useState<Array<any>>([])
+  const [progress, setProgress] = useState(0)
+  const [status, setStatus] = useState<'idle' | 'uploading' | 'complete' | 'error'>('idle')
+  const [error, setError] = useState<Error | null>(null)
 
   const handleUploadSuccess = (files: Array<{ name: string; type: string; size: number; url: string }>) => {
+    setFiles(files)
     console.log('上传成功:', files)
     message.success('文件上传成功')
   }

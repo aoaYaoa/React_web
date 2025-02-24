@@ -1,3 +1,7 @@
+/**
+ * 顶部导航栏组件
+ * 包含菜单折叠、用户信息、主题切换等功能
+ */
 import React, { useState } from 'react'
 import { Layout, Avatar, Dropdown, Badge, Button, theme, Popover, List, Typography, Space, Select, Tooltip } from 'antd'
 import { 
@@ -21,6 +25,8 @@ import { SUPPORTED_LOCALES } from '../../locales'
 import { ThemeSwitch } from './ThemeSwitch'
 import { UserDropdown } from './UserDropdown'
 import styles from './Header.module.scss'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/reduxTookit/store'
 
 const { Header: AntHeader } = Layout
 const { Text } = Typography
@@ -36,6 +42,8 @@ export function Header({ collapsed, onCollapse }: HeaderProps) {
   const { isFullscreen, toggleFullscreen } = useFullscreen()
   const { messages: notifications, markAsRead, markAllAsRead } = useMessages()
   const { locale, changeLocale, messages } = useLocale()
+  const { userInfo } = useSelector((state: RootState) => state.user)
+  const username = userInfo?.username
   
   const unreadCount = notifications.filter(msg => !msg.read).length
 
@@ -163,6 +171,7 @@ export function Header({ collapsed, onCollapse }: HeaderProps) {
           <div className={styles.divider} />
           
           <ThemeSwitch />
+          <span className={styles.username}>{username}</span>
           <UserDropdown />
         </Space>
       </div>

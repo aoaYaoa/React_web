@@ -8,7 +8,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/image-editor/dist/style.css';
 import './ResumableUpload.css';
-import { useUploadStore } from '@/stores/uploadStore';
+
 import type { UppyFile } from '@uppy/core';
 import { Card, List, Typography, Space, Tag } from 'antd';
 import { FileOutlined, PictureOutlined, VideoCameraOutlined } from '@ant-design/icons';
@@ -34,7 +34,10 @@ export function ResumableUpload({
   onSuccess,
   onError
 }: ResumableUploadProps) {
-  const { setFiles, setProgress, setStatus, setError, files, progress, status } = useUploadStore();
+  const [files, setFiles] = useState<UppyFile[]>([]);
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState<'idle' | 'uploading' | 'complete' | 'error'>('idle');
+  const [error, setError] = useState<Error | null>(null);
   
   const [uppy] = useState(() => {
     const uppyInstance = new Uppy({
@@ -60,9 +63,10 @@ export function ResumableUpload({
     const uppyInstance = uppy;
 
     const eventHandlers: Record<UppyEvent, any> = {
-      'file-added': (file: any) => {
+      'file-added': (file: UppyFile) => {
         console.log('文件添加:', file);
         setFiles(uppyInstance.getFiles());
+        setStatus('uploading');
       },
       'upload-success': (file: any, response: any) => {
         console.log('上传成功:', file, response);
@@ -101,7 +105,7 @@ export function ResumableUpload({
         console.warn('Uppy cleanup error:', error);
       }
     };
-  }, [uppy, setFiles, setProgress, setStatus, setError, onSuccess, onError]);
+  }, [uppy, onSuccess, onError]);
 
   const getFileIcon = (type: string) => {
     if (type.startsWith('image/')) return <PictureOutlined />;

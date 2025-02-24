@@ -16,9 +16,16 @@ import {
   BgColorsOutlined,
   AppstoreOutlined,
   BarChartOutlined,
-  MessageOutlined
+  MessageOutlined,
+  CheckCircleOutlined,
+  ApiOutlined,
+  ShoppingOutlined,
+  OrderedListOutlined,
+  TableOutlined
 } from '@ant-design/icons'
 import { useLocale } from '@/hooks/useLocale'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/reduxTookit/store'
 
 type MenuItem = {
   key: string;
@@ -26,6 +33,7 @@ type MenuItem = {
   icon?: React.ReactNode;
   children?: MenuItem[];
   permission?: PermissionCode;
+  path?: string;
 };
 
 export function useMenuItems(): MenuItem[] {
@@ -35,7 +43,9 @@ export function useMenuItems(): MenuItem[] {
     {
       key: '/home',
       label: messages.menu.home,
-      icon: React.createElement(HomeOutlined)
+      icon: React.createElement(HomeOutlined),
+      path: '/home',
+      permission: 'dashboard:view'
     },
     {
       key: '/todo',
@@ -56,51 +66,66 @@ export function useMenuItems(): MenuItem[] {
       ]
     },
     {
-      key: '/hooks',
+      key: 'hooks',
       label: 'Hooks示例',
       icon: React.createElement(ExperimentOutlined),
-      permission: 'system:view',
       children: [
         {
-          key: '/hooks/state',
+          key: 'hooks/state',
           label: 'useState',
-          permission: 'system:view'
+          path: '/hooks/state'
         },
         {
-          key: '/hooks/effect',
+          key: 'hooks/effect',
           label: 'useEffect',
-          permission: 'system:view'
+          path: '/hooks/effect'
         },
         {
-          key: '/hooks/context',
+          key: 'hooks/context',
           label: 'useContext',
-          permission: 'system:view'
+          path: '/hooks/context'
         },
         {
-          key: '/hooks/ref',
-          label: 'useRef',
-          permission: 'system:view'
-        },
-        {
-          key: '/hooks/memo',
-          label: 'useMemo',
-          permission: 'system:view'
-        },
-        {
-          key: '/hooks/callback',
-          label: 'useCallback',
-          permission: 'system:view'
-        },
-        {
-          key: '/hooks/reducer',
+          key: 'hooks/reducer',
           label: 'useReducer',
-          permission: 'system:view'
+          path: '/hooks/reducer'
         },
         {
-          key: '/hooks/custom',
-          label: '自定义Hooks',
-          permission: 'system:view'
+          key: 'hooks/memo',
+          label: 'useMemo',
+          path: '/hooks/memo'
         },
+        {
+          key: 'hooks/callback',
+          label: 'useCallback',
+          path: '/hooks/callback'
+        },
+        {
+          key: 'hooks/ref',
+          label: 'useRef',
+          path: '/hooks/ref'
+        },
+        {
+          key: 'hooks/custom',
+          label: '自定义Hooks',
+          path: '/hooks/custom'
+        },
+        {
+          key: 'hooks/state-management',
+          label: '状态管理',
+          children: [
+            {
+              key: 'hooks/state-management/redux',
+              label: 'Redux示例',
+              path: '/hooks/state-management/redux'
+            },
+            {
+              key: 'hooks/state-management/zustand',
+              label: 'Zustand示例',
+              path: '/hooks/state-management/zustand'
+            }
+          ]
+        }
       ]
     },
     {
@@ -122,20 +147,19 @@ export function useMenuItems(): MenuItem[] {
       ]
     },
     {
-      key: '/state-management',
+      key: 'state-management',
       label: '状态管理',
-      icon: React.createElement(ClusterOutlined),
-      permission: 'system:view',
+      icon: React.createElement(ApiOutlined),
       children: [
         {
-          key: '/state-management/redux',
-          label: 'Redux',
-          permission: 'system:view'
+          key: 'state-management/redux',
+          label: 'Redux示例',
+          path: '/state-management/redux'
         },
         {
-          key: '/state-management/zustand',
-          label: 'Zustand',
-          permission: 'system:view'
+          key: 'state-management/zustand',
+          label: 'Zustand示例',
+          path: '/state-management/zustand'
         }
       ]
     },
@@ -165,7 +189,9 @@ export function useMenuItems(): MenuItem[] {
         {
           key: '/system/files',
           label: '文件上传',
-          icon: React.createElement(FileOutlined)
+          icon: React.createElement(FileOutlined),
+          path: '/system/files',
+          permission: 'upload:view'
         },
         {
           key: '/system/theme',
@@ -205,6 +231,26 @@ export function useMenuItems(): MenuItem[] {
         },
        
       ]
+    },
+    {
+      key: 'product',
+      label: '产品管理',
+      icon: React.createElement(ShoppingOutlined),
+      permission: 'product:view',
+      children: [
+        {
+          key: 'product/list',
+          label: '产品列表',
+          path: '/product/list'
+        }
+      ]
+    },
+    {
+      key: 'cart',
+      label: '购物车',
+      icon: React.createElement(ShoppingOutlined),
+      path: '/cart',
+      permission: 'cart:view'
     }
   ]
 
@@ -216,18 +262,24 @@ export function useMenuItems(): MenuItem[] {
  * @param items - 菜单项
  * @param hasPermission - 用户权限检查函数
  */
-export function filterMenuByPermission(
-  menuItems: MenuItem[] | undefined,
+export const filterMenuByPermission = (
+  menuItems: MenuItem[], 
   hasPermission: (code: PermissionCode) => boolean
-): MenuItem[] {
+): MenuItem[] => {
   if (!menuItems) return [];
+  
   return menuItems.filter(item => {
+    const userInfo = useSelector((state: RootState) => state.user.userInfo);
+    const isAdmin = userInfo?.role === 'admin';
+    if (isAdmin) return true;
+
     if (item.permission && !hasPermission(item.permission)) return false;
+    
     if (item.children) {
-      const filteredChildren = filterMenuByPermission(item.children, hasPermission);
-      item.children = filteredChildren;
-      return filteredChildren.length > 0;
+      item.children = filterMenuByPermission(item.children, hasPermission);
+      return item.children.length > 0;
     }
+    
     return true;
   });
-} 
+};
